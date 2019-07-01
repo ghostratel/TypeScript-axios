@@ -1,9 +1,20 @@
-interface T {
-  [indexed: number]: string
+class Control {
+  private state: any;
 }
 
-let o : T = {
-  '1': 'xxx'
+interface SelectableControl extends Control {
+  select(): void;
 }
 
-console.log(o);
+class Button extends Control implements SelectableControl {
+  select() { }
+}
+
+class TextBox extends Control {
+  say(){}
+}
+
+
+class Image implements SelectableControl {
+  select(){}
+}
