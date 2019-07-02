@@ -1,2 +1,2 @@
-# TypeScript-axios
-Axios implement by TypeScript.
+# awsome-request
+
