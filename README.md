@@ -1,2 +1,2 @@
-# awsome-request
+# awesome-request
 

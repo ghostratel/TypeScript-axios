@@ -1,11 +1,11 @@
 {
-  "name": "awsome-request",
+  "name": "awesome-request",
   "version": "0.0.0",
   "description": "",
   "keywords": [],
-  "main": "dist/awsome-request.umd.js",
-  "module": "dist/awsome-request.es5.js",
-  "typings": "dist/types/awsome-request.d.ts",
+  "main": "dist/awesome-request.umd.js",
+  "module": "dist/awesome-request.es5.js",
+  "typings": "dist/types/awesome-request.d.ts",
   "files": [
     "dist"
   ],
