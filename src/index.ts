@@ -1,5 +1,6 @@
 import { RequestConfig } from './types/index'
 import { URLSerialization } from './helpers/url'
+import { transformData } from './helpers/data'
 import xhr from './xhr'
 
 function request(config: RequestConfig): void {
@@ -8,8 +9,9 @@ function request(config: RequestConfig): void {
 }
 
 function processConfig(config: RequestConfig): void {
-  const { url, params } = config
+  const { url, params, data } = config
   config.url = URLSerialization(url, params)
+  config.data = transformData(data)
 }
 
 export default request
