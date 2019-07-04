@@ -18,7 +18,7 @@ export function encode(str: string): string {
     .replace(/%3A/gi, ':')
     .replace(/%24/g, '$')
     .replace(/%2C/gi, ',')
-    .replace(/%2B/g, '+')
+    .replace(/%20/g, '+')
     .replace(/%5B/gi, '[')
     .replace(/%5D/gi, ']')
 }

@@ -1,6 +1,6 @@
 import { isArray, encode, isDate, isObject } from './utils'
 
-export default function URLSerialization(url: string, params?: any): string {
+export function URLSerialization(url: string, params?: any): string {
   if (!params) {
     return url
   }
@@ -28,13 +28,13 @@ export default function URLSerialization(url: string, params?: any): string {
         continue
       }
 
-      values.push(`${key}=${value}`)
+      values.push(`${key}=${encode(value)}`)
     }
   }
 
   const hashIndex = url.indexOf('#')
   url = hashIndex === -1 ? url : url.slice(0, hashIndex)
-  url.includes('?') ? (url += '&') : (url += '?')
+  url.includes('?') ? (url += '&') : values.length === 0 ? (url += '') : (url += '?')
   url += values.join('&')
   return url
 }
