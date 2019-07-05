@@ -19,4 +19,5 @@ export interface RequestConfig {
   method?: RequestMethod
   data?: any
   params?: any
+  headers?: any
 }

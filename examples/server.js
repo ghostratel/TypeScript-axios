@@ -4,6 +4,9 @@ const app = express()
 
 app.use(cors())
 
+app.use(express.json())
+app.use(express.urlencoded({extended: true}))
+
 app.get('/', (req, res) => {
   res.send('Hello world!')
 })
@@ -15,7 +18,7 @@ app.get('/get', (req, res) => {
 
 
 app.post('/post', (req, res) => {
-  res.json(req.query)
+  res.json(req.body)
 })
 
 app.post('/post/buffer', (req, res) => {
