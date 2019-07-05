@@ -1,5 +1,13 @@
 import { isArray, encode, isDate, isObject } from './utils'
 
+/**
+ * 处理URL
+ *
+ * @export
+ * @param {string} url
+ * @param {*} [params]
+ * @returns {string}
+ */
 export function URLSerialization(url: string, params?: any): string {
   if (!params) {
     return url

@@ -1,18 +1,18 @@
-import { RequestConfig } from './types/index'
+import { RequestConfig, ResponsePromise } from './types/index'
 import { URLSerialization } from './helpers/url'
 import { transformData } from './helpers/data'
-import { processHeaders } from './helpers/headers'
+import { processRequestHeaders } from './helpers/headers'
 import xhr from './xhr'
 
-function request(config: RequestConfig): void {
+function request(config: RequestConfig): ResponsePromise {
   processConfig(config)
-  xhr(config)
+  return xhr(config)
 }
 
 function processConfig(config: RequestConfig): void {
   const { url, params, data, headers } = config
   config.url = URLSerialization(url, params)
-  config.headers = processHeaders(headers, data)
+  config.headers = processRequestHeaders(headers, data)
   config.data = transformData(data)
 }
 
