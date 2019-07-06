@@ -31,6 +31,12 @@ app.post('/post/buffer', (req, res) => {
   })
 })
 
+app.get('/error/timeout', (req, res) => {
+  setTimeout(() => {
+    res.json({msg: '5000ms timeout'})
+  }, 5000)
+})
+
 app.listen(9999, () => {
   console.log('API server is running at port 9999.')
 })

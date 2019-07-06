@@ -21,6 +21,7 @@ export interface RequestConfig {
   params?: any
   headers?: any
   responseType?: XMLHttpRequestResponseType
+  timeout?: number
 }
 
 export interface Response {
@@ -33,3 +34,10 @@ export interface Response {
 }
 
 export interface ResponsePromise extends Promise<Response> {}
+
+export interface RequestErrorInterface extends Error {
+  config: RequestConfig
+  code?: number | null
+  request: XMLHttpRequest
+  response?: Response | null
+}
