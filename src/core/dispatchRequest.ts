@@ -1,8 +1,19 @@
-import { RequestConfig, ResponsePromise, Response } from './types/index'
-import { processResponse } from './helpers/response'
-import { RequestError } from './helpers/error'
+import { RequestConfig, ResponsePromise, Response } from '../types/index'
+import { processResponse } from '../helpers/response'
+import { RequestError } from '../helpers/error'
+import { URLSerialization } from '../helpers/url'
+import { transformData } from '../helpers/data'
+import { processRequestHeaders } from '../helpers/headers'
 
-export default function xhr(config: RequestConfig): ResponsePromise {
+function processConfig(config: RequestConfig): void {
+  const { url, params, data, headers } = config
+  config.url = URLSerialization(url, params)
+  config.headers = processRequestHeaders(headers, data)
+  config.data = transformData(data)
+}
+
+export default function dispatchRequest(config: RequestConfig): ResponsePromise {
+  processConfig(config)
   return new Promise((resolve, reject) => {
     const {
       url,

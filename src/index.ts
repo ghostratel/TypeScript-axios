@@ -1,19 +1,15 @@
-import { RequestConfig, ResponsePromise } from './types/index'
-import { URLSerialization } from './helpers/url'
-import { transformData } from './helpers/data'
-import { processRequestHeaders } from './helpers/headers'
-import xhr from './xhr'
+import { RequestMixins } from './types/index'
+import Request from './core/request'
 
-function request(config: RequestConfig): ResponsePromise {
-  processConfig(config)
-  return xhr(config)
+function createRequestMixins(): RequestMixins {
+  const requestInstance: Request = new Request()
+  const mixins: any = requestInstance.request.bind(requestInstance)
+
+  for (let key in requestInstance) {
+    mixins[key] = requestInstance[key]
+  }
+
+  return mixins
 }
 
-function processConfig(config: RequestConfig): void {
-  const { url, params, data, headers } = config
-  config.url = URLSerialization(url, params)
-  config.headers = processRequestHeaders(headers, data)
-  config.data = transformData(data)
-}
-
-export default request
+export default createRequestMixins()

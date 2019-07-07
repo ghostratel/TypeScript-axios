@@ -41,3 +41,28 @@ export interface RequestErrorInterface extends Error {
   request: XMLHttpRequest
   response?: Response | null
 }
+
+export interface RequestInterface {
+  [index: string]: any
+
+  request(url: string, config?: any): ResponsePromise
+  request(config: RequestConfig): ResponsePromise
+
+  get(url: string, config?: any): ResponsePromise
+
+  delete(url: string, config?: any): ResponsePromise
+
+  head(url: string, config?: any): ResponsePromise
+
+  options(url: string, config?: any): ResponsePromise
+
+  post(url: string, data?: any, config?: any): ResponsePromise
+
+  put(url: string, data?: any, config?: any): ResponsePromise
+
+  patch(url: string, data?: any, config?: any): ResponsePromise
+}
+
+export interface RequestMixins extends RequestInterface {
+  (config: RequestConfig): ResponsePromise
+}
