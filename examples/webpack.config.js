@@ -16,7 +16,7 @@ const HtmlWebpackPlugins = [
 
 let entries = fs.readdirSync(path.join(__dirname, 'samples'))
 entries.forEach(example => {
-  entry[example] = path.join(__dirname, `samples/${example}/${example}.js`)
+  entry[example] = path.join(__dirname, `samples/${example}/${example}.ts`)
   HtmlWebpackPlugins.push(
     new HtmlWebpackPlugin({
       template: path.join(__dirname, `samples/${example}/${example}.html`),

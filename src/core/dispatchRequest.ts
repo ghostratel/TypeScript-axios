@@ -21,7 +21,7 @@ export default function dispatchRequest(config: RequestConfig): ResponsePromise 
       data = null,
       headers = {},
       responseType = '',
-      timeout = 2000
+      timeout = 0
     } = config
     let xhr = new XMLHttpRequest()
 
