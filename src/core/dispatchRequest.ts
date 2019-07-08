@@ -1,4 +1,4 @@
-import { RequestConfig, ResponsePromise, Response } from '../types/index'
+import { RequestConfig, ResponsePromise, Response, RequestInterface } from '../types/index'
 import { processResponse } from '../helpers/response'
 import { RequestError } from '../helpers/error'
 import { URLSerialization } from '../helpers/url'

@@ -1,13 +1,54 @@
-import { RequestInterface, RequestConfig, ResponsePromise } from '../types/index'
+import {
+  RequestInterface,
+  RequestConfig,
+  ResponsePromise,
+  InterceptorResolvedFn,
+  InterceptorRejectedFn
+} from '../types/index'
 import dispatchRequest from './dispatchRequest'
+import { RequestInterceptorsController, ResponseInterceptorsController } from './interceptors'
+
+interface Interceptors {
+  request: RequestInterceptorsController
+  response: ResponseInterceptorsController
+}
+
+interface PromiseChain<T> {
+  resolved: InterceptorResolvedFn<T> | ((config: RequestConfig) => ResponsePromise)
+  rejected?: InterceptorRejectedFn
+}
 
 export default class Request implements RequestInterface {
   [index: string]: any
 
+  interceptors: Interceptors
+
   request(url: string | RequestConfig, config: any = { method: 'GET' }): ResponsePromise {
-    return typeof url === 'string'
-      ? dispatchRequest(Object.assign(config, { url }))
-      : dispatchRequest(url)
+    const _config: RequestConfig = typeof url === 'string' ? { ...config, url } : url
+
+    const chain: PromiseChain<any>[] = [
+      {
+        resolved: dispatchRequest,
+        rejected: undefined
+      }
+    ]
+
+    this.interceptors.request.forEach(interceptor => {
+      chain.push(interceptor)
+    })
+
+    this.interceptors.response.forEach(interceptor => {
+      chain.push(interceptor)
+    })
+
+    let promise = Promise.resolve(_config)
+
+    while (chain.length) {
+      const { resolved, rejected } = chain.shift()!
+      promise = promise.then(resolved, rejected)
+    }
+
+    return promise
   }
 
   get(url: string, config: any = {}): ResponsePromise {
@@ -36,5 +77,12 @@ export default class Request implements RequestInterface {
 
   put(url: string, data: any = {}, config: any = {}): ResponsePromise {
     return this.request(url, Object.assign(config, { data, method: 'PUT' }))
+  }
+
+  constructor() {
+    this.interceptors = {
+      request: new RequestInterceptorsController(),
+      response: new ResponseInterceptorsController()
+    }
   }
 }
