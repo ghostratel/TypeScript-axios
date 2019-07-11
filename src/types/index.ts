@@ -88,3 +88,11 @@ export interface InterceptorsControllerInterface<T> {
   use: (resolvedFn: InterceptorResolvedFn<T>, rejectedFn?: InterceptorRejectedFn) => number
   eject: (id: number) => void
 }
+
+export interface Defaults {
+  timeout: number
+
+  method: string
+
+  headers: object
+}
