@@ -44,6 +44,9 @@ export interface RequestErrorInterface extends Error {
 
 export interface RequestInterface {
   [index: string]: any
+
+  defaults: Defaults
+
   interceptors: {
     request: InterceptorsControllerInterface<RequestConfig>
     response: InterceptorsControllerInterface<Response>
