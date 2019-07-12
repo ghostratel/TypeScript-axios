@@ -22,3 +22,7 @@ export function encode(str: string): string {
     .replace(/%5B/gi, '[')
     .replace(/%5D/gi, ']')
 }
+
+export function deepCopy<T>(target: T): T {
+  return JSON.parse(JSON.stringify(target))
+}

@@ -1,8 +1,9 @@
 import { isObject } from './utils'
+import { RequestMethod } from '../types/index'
 
 function normalizeHeadersName(headers: any, name: string): void {
   Object.keys(headers).forEach(k => {
-    if (headers[k].toUpperCase() === name.toUpperCase()) {
+    if (headers[k].toString().toUpperCase() === name.toUpperCase()) {
       headers[name] = headers[k]
       delete headers[k]
     }
@@ -20,7 +21,7 @@ function normalizeHeadersName(headers: any, name: string): void {
 export function processRequestHeaders(headers: any = {}, data: any): object {
   if (isObject(data)) {
     normalizeHeadersName(headers, 'content-type')
-    !headers['content-type'] && (headers['content-type'] = 'application/json; charset=utf-8')
+    !headers['content-type'] && (headers['content-type'] = 'application/json, charset=utf-8')
   }
   return headers
 }
@@ -42,4 +43,29 @@ export function processResponseHeaders(headersString: string): any {
     ret[key] = value
   })
   return ret
+}
+
+const fieldsNeedToBeDeleted = ['get', 'post', 'delete', 'options', 'head', 'patch', 'put']
+
+export function flattenHeaders(headers: any, requestMethod: RequestMethod): any {
+  // 将common字段抹平
+  for (let key in headers.common) {
+    headers[key] = headers[key] || headers.common[key]
+  }
+
+  delete headers.common
+
+  // 将当前方法配置的headers抹平
+
+  for (let key in headers[requestMethod]) {
+    headers[key] = headers[key] || headers[requestMethod][key]
+  }
+
+  for (let key in headers) {
+    if (fieldsNeedToBeDeleted.includes(key)) {
+      delete headers[key]
+    }
+  }
+
+  return headers
 }

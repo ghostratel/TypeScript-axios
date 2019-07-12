@@ -32,7 +32,6 @@ export default class Request implements RequestInterface {
       typeof url === 'string'
         ? mergeConf(this.defaults, { ...config, url })
         : mergeConf(this.defaults, url)
-
     const chain: PromiseChain<any>[] = [
       {
         resolved: dispatchRequest,

@@ -3,13 +3,14 @@ import { processResponse } from '../helpers/response'
 import { RequestError } from '../helpers/error'
 import { URLSerialization } from '../helpers/url'
 import { transformData } from '../helpers/data'
-import { processRequestHeaders } from '../helpers/headers'
+import { processRequestHeaders, flattenHeaders } from '../helpers/headers'
 
 function processConfig(config: RequestConfig): void {
   const { url, params, data, headers } = config
   config.url = URLSerialization(url, params)
   config.headers = processRequestHeaders(headers, data)
   config.data = transformData(data)
+  config.headers = flattenHeaders(config.headers, config.method!)
 }
 
 export default function dispatchRequest(config: RequestConfig): ResponsePromise {
@@ -17,7 +18,7 @@ export default function dispatchRequest(config: RequestConfig): ResponsePromise 
   return new Promise((resolve, reject) => {
     const {
       url,
-      method = 'GET',
+      method = 'get',
       data = null,
       headers = {},
       responseType = '',

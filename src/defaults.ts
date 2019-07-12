@@ -1,13 +1,13 @@
 import { Defaults } from './types/index'
 
 export const defaults: Defaults = {
-  method: 'GET',
+  method: 'get',
 
   timeout: 0,
 
   headers: {
     common: {
-      accept: 'application/json; text/plain; */*'
+      accept: 'application/json, text/plain, */*'
     },
     get: {},
     delete: {},

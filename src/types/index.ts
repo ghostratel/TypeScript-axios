@@ -15,6 +15,7 @@ export type RequestMethod =
   | 'PATCH'
 
 export interface RequestConfig {
+  [index: string]: any
   url: string
   method?: RequestMethod
   data?: any
@@ -99,5 +100,5 @@ export interface Defaults {
 
   method: string
 
-  headers: object
+  headers: any
 }
