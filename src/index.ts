@@ -1,8 +1,8 @@
-import { RequestMixins } from './types/index'
+import { RequestMixin } from './types/index'
 import Request from './core/request'
 import { defaults } from './defaults'
 
-function createRequestMixins(): RequestMixins {
+function createRequestMixins(): RequestMixin {
   const requestInstance: Request = new Request(defaults)
   const mixins: any = requestInstance.request.bind(requestInstance)
 

@@ -8,6 +8,7 @@ import {
 } from '../types/index'
 import dispatchRequest from './dispatchRequest'
 import { RequestInterceptorsController, ResponseInterceptorsController } from './interceptors'
+import { mergeConf } from '../helpers/merge'
 
 interface Interceptors {
   request: RequestInterceptorsController
@@ -26,8 +27,11 @@ export default class Request implements RequestInterface {
 
   interceptors: Interceptors
 
-  request(url: string | RequestConfig, config: any = { method: 'GET' }): ResponsePromise {
-    const _config: RequestConfig = typeof url === 'string' ? { ...config, url } : url
+  request(url: string | RequestConfig, config: any = {}): ResponsePromise {
+    const _config: RequestConfig =
+      typeof url === 'string'
+        ? mergeConf(this.defaults, { ...config, url })
+        : mergeConf(this.defaults, url)
 
     const chain: PromiseChain<any>[] = [
       {

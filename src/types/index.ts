@@ -70,7 +70,7 @@ export interface RequestInterface {
   patch(url: string, data?: any, config?: any): ResponsePromise
 }
 
-export interface RequestMixins extends RequestInterface {
+export interface RequestMixin extends RequestInterface {
   (config: RequestConfig): ResponsePromise
 }
 
@@ -93,6 +93,8 @@ export interface InterceptorsControllerInterface<T> {
 }
 
 export interface Defaults {
+  [index: string]: any
+
   timeout: number
 
   method: string
