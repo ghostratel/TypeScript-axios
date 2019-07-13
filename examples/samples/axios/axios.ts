@@ -1,3 +1,18 @@
 import axios from 'axios'
 
-axios.get('http://localhost:9999/get')
+axios({
+  url: 'http://localhost:9999/get',
+  responseType: 'json',
+  params: {
+    foo: 'bar'
+  },
+  transformResponse: [
+    function (data) {
+      console.log(data)
+      data.xxx ='xxx'
+      return data
+    }
+  ]
+}).then(data => {
+  console.log(data);
+})

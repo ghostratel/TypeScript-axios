@@ -23,6 +23,10 @@ export interface RequestConfig {
   headers?: any
   responseType?: XMLHttpRequestResponseType
   timeout?: number
+
+  transformRequest?: TransformFunc | TransformFunc[]
+
+  transformResponse?: TransformFunc | TransformFunc[]
 }
 
 export interface Response {
@@ -93,6 +97,10 @@ export interface InterceptorsControllerInterface<T> {
   eject: (id: number) => void
 }
 
+export interface TransformFunc {
+  (data: any, headers?: any): any
+}
+
 export interface Defaults {
   [index: string]: any
 
@@ -101,4 +109,8 @@ export interface Defaults {
   method: string
 
   headers: any
+
+  transformRequest: TransformFunc | TransformFunc[]
+
+  transformResponse: TransformFunc | TransformFunc[]
 }

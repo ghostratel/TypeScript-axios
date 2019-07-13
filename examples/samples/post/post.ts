@@ -11,6 +11,15 @@ import request from '../../../src/index'
 
 request({
   url: 'http://localhost:9999/post',
+  transformRequest: [
+    function(data, h) {
+      console.log(1, h)
+      return data
+    }
+  , function(data,h) {
+    console.log(2, h)
+    return data
+  }],
   method: 'post',
   data: {
     foo: 'bar',
@@ -19,7 +28,9 @@ request({
   headers: {
     'Accept': 'application/json; text/plain;xxxx'
   }
-})
+}).then(data => {
+  console.log(data)
+}).catch(err => err)
 
 // request({
 //   url: 'http://localhost:9999/post',

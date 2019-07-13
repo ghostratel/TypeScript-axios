@@ -33,6 +33,14 @@ export default class Request implements RequestInterface {
         ? mergeConf(this.defaults, { ...config, url })
         : mergeConf(this.defaults, url)
 
+    if (!Array.isArray(_config.transformRequest)) {
+      _config.transformRequest = [_config.transformRequest!]
+    }
+
+    _config.transformRequest.forEach(fn => {
+      _config.data = fn(_config.data, _config.headers)
+    })
+
     const chain: PromiseChain<any>[] = [
       {
         resolved: dispatchRequest,

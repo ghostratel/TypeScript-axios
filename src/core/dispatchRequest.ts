@@ -1,4 +1,4 @@
-import { RequestConfig, ResponsePromise, Response } from '../types/index'
+import { RequestConfig, ResponsePromise, Response, TransformFunc } from '../types/index'
 import { processResponse } from '../helpers/response'
 import { RequestError } from '../helpers/error'
 import { URLSerialization } from '../helpers/url'
@@ -44,8 +44,18 @@ export default function dispatchRequest(config: RequestConfig): ResponsePromise 
 
     xhr.onreadystatechange = () => {
       if (xhr.readyState === XMLHttpRequest.DONE && xhr.status !== 0) {
+        let _data: any
+
+        if (!Array.isArray(config.transformResponse)) {
+          config.transformResponse = [config.transformResponse!]
+        }
+
+        config.transformResponse.forEach(fn => {
+          _data = fn(xhr.responseText || xhr.response)
+        })
+
         // 请求完成，但不一定成功
-        const response: Response = processResponse(xhr, config)
+        const response: Response = processResponse(_data, xhr, config)
         if (xhr.status >= 200 && xhr.status < 300) {
           resolve(response)
         } else {

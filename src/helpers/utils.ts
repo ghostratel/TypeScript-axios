@@ -23,6 +23,26 @@ export function encode(str: string): string {
     .replace(/%5D/gi, ']')
 }
 
-export function deepCopy<T>(target: T): T {
-  return JSON.parse(JSON.stringify(target))
+/**
+ * 一层深拷贝
+ *
+ * @export
+ * @param {*} target
+ * @returns {*}
+ */
+export function deepCopy(target: any): any {
+  let ret = Object.create(null)
+
+  for (let key in target) {
+    if (isObject(target[key])) {
+      ret[key] = { ...target[key] }
+      continue
+    }
+    if (isArray(target[key])) {
+      ret[key] = [...target[key]]
+      continue
+    }
+    ret[key] = target[key]
+  }
+  return ret
 }
