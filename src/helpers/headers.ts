@@ -18,11 +18,9 @@ function normalizeHeadersName(headers: any, name: string): void {
  * @param {*} data
  * @returns {object}
  */
-export function processRequestHeaders(headers: any = {}, data: any): object {
-  if (isObject(data)) {
-    normalizeHeadersName(headers, 'content-type')
-    !headers['content-type'] && (headers['content-type'] = 'application/json, charset=utf-8')
-  }
+export function processRequestHeaders(headers: any = {}, requestMethod: RequestMethod): object {
+  normalizeHeadersName(headers, 'content-type')
+  headers = flattenHeaders(headers, requestMethod)
   return headers
 }
 

@@ -8,9 +8,8 @@ import { processRequestHeaders, flattenHeaders } from '../helpers/headers'
 function processConfig(config: RequestConfig): void {
   const { url, params, data, headers } = config
   config.url = URLSerialization(url, params)
-  config.headers = processRequestHeaders(headers, data)
+  config.headers = processRequestHeaders(headers, config.method!)
   config.data = transformData(data)
-  config.headers = flattenHeaders(config.headers, config.method!)
 }
 
 export default function dispatchRequest(config: RequestConfig): ResponsePromise {
