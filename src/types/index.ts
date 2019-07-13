@@ -77,6 +77,7 @@ export interface RequestInterface {
 
 export interface RequestMixin extends RequestInterface {
   (config: RequestConfig): ResponsePromise
+  create(config?: any): RequestMixin
 }
 
 export interface InterceptorResolvedFn<T> {

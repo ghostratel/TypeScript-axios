@@ -1,16 +1,26 @@
-import { RequestMixin } from './types/index'
+import { RequestMixin, Defaults, RequestConfig } from './types/index'
+import { mergeConf } from './helpers/merge'
 import Request from './core/request'
 import { defaults } from './defaults'
 
-function createRequestMixins(): RequestMixin {
-  const requestInstance: Request = new Request(defaults)
-  const mixins: any = requestInstance.request.bind(requestInstance)
+function createRequestMixin(config: Defaults): RequestMixin {
+  const requestInstance: Request = new Request(config)
+  const mixin: any = requestInstance.request.bind(requestInstance)
 
   for (let key in requestInstance) {
-    mixins[key] = requestInstance[key]
+    mixin[key] = requestInstance[key]
   }
 
-  return mixins
+  return mixin
 }
 
-export default createRequestMixins()
+const request = createRequestMixin(defaults)
+
+request.create = function(config?: Defaults) {
+  if (!config) {
+    config = {} as Defaults
+  }
+  return createRequestMixin(mergeConf(defaults, config as RequestConfig) as Defaults)
+}
+
+export default request
