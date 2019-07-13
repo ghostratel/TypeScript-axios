@@ -12,6 +12,10 @@ export function isObject(o: any): o is Object {
   return protoToString.call(o) === '[object Object]'
 }
 
+export function isURLSearchParams(val: any): val is URLSearchParams {
+  return val instanceof URLSearchParams
+}
+
 export function encode(str: string): string {
   return encodeURIComponent(str)
     .replace(/%40/g, '@')

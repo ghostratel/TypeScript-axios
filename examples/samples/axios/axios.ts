@@ -1,18 +1,16 @@
 import axios from 'axios'
+import qs from 'qs'
+
+console.log(qs.stringify({
+  foo: 'bar'
+}))
 
 axios({
-  url: 'http://localhost:9999/get',
-  responseType: 'json',
-  params: {
+  url: 'http://localhost:9999/post',
+  method: 'post',
+  data: qs.stringify({
     foo: 'bar'
-  },
-  transformResponse: [
-    function (data) {
-      console.log(data)
-      data.xxx ='xxx'
-      return data
-    }
-  ]
+  })
 }).then(data => {
   console.log(data);
 })

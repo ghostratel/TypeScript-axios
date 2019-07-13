@@ -1,5 +1,5 @@
 import { Defaults } from './types/index'
-import { transformData } from './helpers/data'
+import { isURLSearchParams, isObject } from './helpers/utils'
 
 /**
  * 试着将请求返回的文本转成JSON
@@ -40,7 +40,19 @@ export const defaults: Defaults = {
     }
   },
 
-  transformRequest: [data => transformData(data)],
+  transformRequest: [
+    (data, headers) => {
+      if (isURLSearchParams(data) || typeof data === 'string') {
+        !headers['Content-Type'] &&
+          (headers['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8')
+        return data.toString()
+      }
+      if (isObject(data)) {
+        !headers['Content-Type'] && (headers['Content-Type'] = 'application/json;charset=utf-8')
+        return JSON.stringify(data)
+      }
+    }
+  ],
 
   transformResponse: [
     data => {
