@@ -7,20 +7,20 @@ export const defaults: Defaults = {
 
   headers: {
     common: {
-      accept: 'application/json, text/plain, */*'
+      Accept: 'application/json, text/plain, */*'
     },
     get: {},
     delete: {},
     options: {},
     head: {},
     post: {
-      'content-type': 'application/x-www-form-urlencoded'
+      'Content-Type': 'application/x-www-form-urlencoded'
     },
     patch: {
-      'content-type': 'application/x-www-form-urlencoded'
+      'Content-Type': 'application/x-www-form-urlencoded'
     },
     put: {
-      'content-type': 'application/x-www-form-urlencoded'
+      'Content-Type': 'application/x-www-form-urlencoded'
     }
   }
 }

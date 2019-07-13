@@ -1,9 +1,8 @@
-import { isObject } from './utils'
 import { RequestMethod } from '../types/index'
 
 function normalizeHeadersName(headers: any, name: string): void {
   Object.keys(headers).forEach(k => {
-    if (headers[k].toString().toUpperCase() === name.toUpperCase()) {
+    if (k.toUpperCase() === name.toUpperCase() && k !== name) {
       headers[name] = headers[k]
       delete headers[k]
     }
@@ -19,7 +18,8 @@ function normalizeHeadersName(headers: any, name: string): void {
  * @returns {object}
  */
 export function processRequestHeaders(headers: any = {}, requestMethod: RequestMethod): object {
-  normalizeHeadersName(headers, 'content-type')
+  normalizeHeadersName(headers, 'Content-Type')
+  normalizeHeadersName(headers, 'Accept')
   headers = flattenHeaders(headers, requestMethod)
   return headers
 }

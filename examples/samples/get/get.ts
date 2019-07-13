@@ -10,6 +10,6 @@ request({
     foo: 'bar'
   },
   headers: {
-    zzz: 'zzzz'
+    zzz: 'zzzz',
   }
 })

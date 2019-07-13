@@ -3,7 +3,7 @@ import { processResponse } from '../helpers/response'
 import { RequestError } from '../helpers/error'
 import { URLSerialization } from '../helpers/url'
 import { transformData } from '../helpers/data'
-import { processRequestHeaders, flattenHeaders } from '../helpers/headers'
+import { processRequestHeaders } from '../helpers/headers'
 
 function processConfig(config: RequestConfig): void {
   const { url, params, data, headers } = config
