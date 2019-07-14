@@ -27,6 +27,8 @@ export interface RequestConfig {
   transformRequest?: TransformFunc | TransformFunc[]
 
   transformResponse?: TransformFunc | TransformFunc[]
+
+  cancelToken?: CancelToken
 }
 
 export interface Response {
@@ -78,6 +80,10 @@ export interface RequestInterface {
 export interface RequestMixin extends RequestInterface {
   (config: RequestConfig): ResponsePromise
   create(config?: any): RequestMixin
+
+  CancelToken: CancelTokenStatic
+  Cancel: CancelStatic
+  isCancel: (value: any) => boolean
 }
 
 export interface InterceptorResolvedFn<T> {
@@ -114,4 +120,38 @@ export interface Defaults {
   transformRequest: TransformFunc | TransformFunc[]
 
   transformResponse: TransformFunc | TransformFunc[]
+}
+
+export interface CancelToken {
+  promise: Promise<Cancel>
+  reason?: Cancel
+
+  throwIfRequested(): void
+}
+
+export interface Canceler {
+  (message?: string): void
+}
+
+export interface CancelerExecutor {
+  (cancel: Canceler): void
+}
+
+export interface CancelTokenSource {
+  token: CancelToken
+  cancel: Canceler
+}
+
+export interface CancelTokenStatic {
+  new (executor: CancelerExecutor): CancelToken
+
+  source(): CancelTokenSource
+}
+
+export interface Cancel {
+  message?: string
+}
+
+export interface CancelStatic {
+  new (message?: string): Cancel
 }

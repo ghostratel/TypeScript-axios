@@ -37,6 +37,12 @@ app.get('/error/timeout', (req, res) => {
   }, 5000)
 })
 
+app.get('/cancel/get', (req, res) => {
+  setTimeout(() => {
+    res.json('Hello!!!')
+  }, 3000)
+})
+
 app.listen(9999, () => {
   console.log('API server is running at port 9999.')
 })

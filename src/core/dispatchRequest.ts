@@ -13,6 +13,9 @@ function processConfig(config: RequestConfig): void {
 }
 
 export default function dispatchRequest(config: RequestConfig): ResponsePromise {
+  if (config.cancelToken) {
+    config.cancelToken.throwIfRequested()
+  }
   processConfig(config)
   return new Promise((resolve, reject) => {
     const {
@@ -21,7 +24,8 @@ export default function dispatchRequest(config: RequestConfig): ResponsePromise 
       data = null,
       headers = {},
       responseType = '',
-      timeout = 0
+      timeout = 0,
+      cancelToken
     } = config
     let xhr = new XMLHttpRequest()
 
@@ -70,6 +74,13 @@ export default function dispatchRequest(config: RequestConfig): ResponsePromise 
           )
         }
       }
+    }
+
+    if (cancelToken) {
+      cancelToken.promise.then(reason => {
+        xhr.abort()
+        reject(reason)
+      })
     }
 
     xhr.send(data)

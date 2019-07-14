@@ -2,6 +2,8 @@ import { RequestMixin, Defaults, RequestConfig } from './types/index'
 import { mergeConf } from './helpers/merge'
 import Request from './core/request'
 import { defaults } from './defaults'
+import { CancelToken } from './cancel/CancelToken'
+import { Cancel, isCancel } from './cancel/Cancel'
 
 function createRequestMixin(config: Defaults): RequestMixin {
   const requestInstance: Request = new Request(config)
@@ -22,5 +24,9 @@ request.create = function(config?: Defaults) {
   }
   return createRequestMixin(mergeConf(defaults, config as RequestConfig) as Defaults)
 }
+
+request.CancelToken = CancelToken
+request.Cancel = Cancel
+request.isCancel = isCancel
 
 export default request
