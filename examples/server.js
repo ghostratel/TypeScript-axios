@@ -1,8 +1,10 @@
 const express = require('express')
 const cors = require('cors')
+const cookie = require('cookie-parser')
 const app = express()
 
-app.use(cors())
+app.use(cors({origin: 'http://127.0.0.1:8888',credentials: true}))
+app.use(cookie())
 
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
@@ -41,6 +43,11 @@ app.get('/cancel/get', (req, res) => {
   setTimeout(() => {
     res.json('Hello!!!')
   }, 3000)
+})
+
+app.post('/cookie/post', (req, res) => {
+  res.cookie('foo', 'bar')
+  res.json(req.cookies)
 })
 
 app.listen(9999, () => {

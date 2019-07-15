@@ -29,6 +29,8 @@ export interface RequestConfig {
   transformResponse?: TransformFunc | TransformFunc[]
 
   cancelToken?: CancelToken
+
+  withCredentials?: boolean
 }
 
 export interface Response {

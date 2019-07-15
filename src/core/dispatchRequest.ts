@@ -25,7 +25,8 @@ export default function dispatchRequest(config: RequestConfig): ResponsePromise 
       headers = {},
       responseType = '',
       timeout = 0,
-      cancelToken
+      cancelToken,
+      withCredentials
     } = config
     let xhr = new XMLHttpRequest()
 
@@ -77,10 +78,18 @@ export default function dispatchRequest(config: RequestConfig): ResponsePromise 
     }
 
     if (cancelToken) {
-      cancelToken.promise.then(reason => {
-        xhr.abort()
-        reject(reason)
-      })
+      cancelToken.promise
+        .then(reason => {
+          xhr.abort()
+          reject(reason)
+        })
+        .catch(() => {
+          // ignore
+        })
+    }
+
+    if (withCredentials) {
+      xhr.withCredentials = withCredentials
     }
 
     xhr.send(data)
