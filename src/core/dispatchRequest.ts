@@ -4,6 +4,8 @@ import { RequestError } from '../helpers/error'
 import { URLSerialization } from '../helpers/url'
 import { transformData } from '../helpers/data'
 import { processRequestHeaders } from '../helpers/headers'
+import { isCrossOrigin } from '../helpers/url'
+import { cookie } from '../helpers/cookie'
 
 function processConfig(config: RequestConfig): void {
   const { url, params, data, headers } = config
@@ -26,7 +28,9 @@ export default function dispatchRequest(config: RequestConfig): ResponsePromise 
       responseType = '',
       timeout = 0,
       cancelToken,
-      withCredentials
+      withCredentials,
+      xsrfCookieName,
+      xsrfHeaderName
     } = config
     let xhr = new XMLHttpRequest()
 
@@ -34,6 +38,13 @@ export default function dispatchRequest(config: RequestConfig): ResponsePromise 
 
     xhr.responseType = responseType
     xhr.timeout = timeout
+
+    if (withCredentials || (isCrossOrigin(url) && xsrfCookieName)) {
+      const cookieValue = cookie.read(xsrfCookieName!)
+      if (cookieValue && xsrfHeaderName) {
+        headers[xsrfHeaderName] = cookieValue
+      }
+    }
 
     Object.keys(headers).forEach(k => {
       xhr.setRequestHeader(k, headers[k])

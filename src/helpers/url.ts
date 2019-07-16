@@ -46,3 +46,21 @@ export function URLSerialization(url: string, params?: any): string {
   url += values.join('&')
   return url
 }
+
+interface ResolvedURL {
+  protocol: string
+  host: string
+}
+
+export function isCrossOrigin(requestURL: string): boolean {
+  const r = resolveURL(requestURL)
+  const h = resolveURL(window.location.href)
+  return r.host === h.host && r.protocol === h.protocol
+}
+
+function resolveURL(URL: string): ResolvedURL {
+  const utilNode = document.createElement('a')
+  utilNode.setAttribute('href', URL)
+  const { protocol, host } = utilNode
+  return { protocol, host }
+}

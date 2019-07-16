@@ -31,6 +31,10 @@ export interface RequestConfig {
   cancelToken?: CancelToken
 
   withCredentials?: boolean
+
+  xsrfCookieName?: string
+
+  xsrfHeaderName?: string
 }
 
 export interface Response {
@@ -122,6 +126,10 @@ export interface Defaults {
   transformRequest: TransformFunc | TransformFunc[]
 
   transformResponse: TransformFunc | TransformFunc[]
+
+  xsrfCookieName?: string
+
+  xsrfHeaderName?: string
 }
 
 export interface CancelToken {

@@ -58,5 +58,11 @@ export const defaults: Defaults = {
     data => {
       return typeof data === 'string' ? tryToTransformResponseText(data) : data
     }
-  ]
+  ],
+
+  withCredentials: false,
+
+  xsrfCookieName: 'XSRF-TOKEN',
+
+  xsrfHeaderName: 'X-XSRF-TOKEN'
 }

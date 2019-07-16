@@ -50,6 +50,12 @@ app.post('/cookie/post', (req, res) => {
   res.json(req.cookies)
 })
 
+app.get('/xsrf', (req, res) => {
+  console.log(req.cookies)
+  res.cookie('xxx-xsrf-xxx', 'foobarbazboo')
+  res.json({msg: 'hello'})
+})
+
 app.listen(9999, () => {
   console.log('API server is running at port 9999.')
 })
