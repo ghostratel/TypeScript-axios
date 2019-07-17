@@ -16,6 +16,10 @@ export function isURLSearchParams(val: any): val is URLSearchParams {
   return val instanceof URLSearchParams
 }
 
+export function isFormData(val: any): val is FormData {
+  return val instanceof FormData
+}
+
 export function encode(str: string): string {
   return encodeURIComponent(str)
     .replace(/%40/g, '@')

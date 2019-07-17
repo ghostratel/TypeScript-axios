@@ -5,6 +5,7 @@ import { URLSerialization, isCrossOrigin } from '../helpers/url'
 import { transformData } from '../helpers/data'
 import { processRequestHeaders } from '../helpers/headers'
 import { cookie } from '../helpers/cookie'
+import { isFormData } from '../helpers/utils'
 
 function processConfig(config: RequestConfig): void {
   const { url, params, data, headers } = config
@@ -29,7 +30,9 @@ export default function dispatchRequest(config: RequestConfig): ResponsePromise 
       cancelToken,
       withCredentials,
       xsrfCookieName,
-      xsrfHeaderName
+      xsrfHeaderName,
+      onDownloadProgress,
+      onUploadProgress
     } = config
     let xhr = new XMLHttpRequest()
 
@@ -45,9 +48,21 @@ export default function dispatchRequest(config: RequestConfig): ResponsePromise 
       }
     }
 
+    if (isFormData(data)) {
+      delete headers['Content-Type']
+    }
+
     Object.keys(headers).forEach(k => {
       xhr.setRequestHeader(k, headers[k])
     })
+
+    if (onDownloadProgress) {
+      xhr.onprogress = onDownloadProgress
+    }
+
+    if (onUploadProgress) {
+      xhr.upload.onprogress = onUploadProgress
+    }
 
     xhr.ontimeout = () => {
       reject(new RequestError(`Timeout of ${timeout} ms exceeded.`, config, null, xhr))

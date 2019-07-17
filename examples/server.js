@@ -1,6 +1,8 @@
 const express = require('express')
 const cors = require('cors')
 const cookie = require('cookie-parser')
+const multiparty = require('connect-multiparty')
+const path = require('path')
 const app = express()
 
 app.use(cors({origin: 'http://127.0.0.1:8888',credentials: true}))
@@ -8,6 +10,9 @@ app.use(cookie())
 
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
+app.use(multiparty({
+  uploadDir: path.resolve(__dirname, 'upload-dir')
+}))
 
 app.get('/', (req, res) => {
   res.send('Hello world!')
@@ -53,6 +58,10 @@ app.post('/cookie/post', (req, res) => {
 app.get('/xsrf', (req, res) => {
   console.log(req.cookies)
   res.cookie('xxx-xsrf-xxx', 'foobarbazboo')
+  res.json({msg: 'hello'})
+})
+
+app.post('/upload', (req, res) => {
   res.json({msg: 'hello'})
 })
 

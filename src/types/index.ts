@@ -35,6 +35,9 @@ export interface RequestConfig {
   xsrfCookieName?: string
 
   xsrfHeaderName?: string
+
+  onDownloadProgress?: (e: ProgressEvent) => void
+  onUploadProgress?: (e: ProgressEvent) => void
 }
 
 export interface Response {
@@ -130,6 +133,9 @@ export interface Defaults {
   xsrfCookieName?: string
 
   xsrfHeaderName?: string
+
+  onDownloadProgress?: (e: ProgressEvent) => void
+  onUploadProgress?: (e: ProgressEvent) => void
 }
 
 export interface CancelToken {

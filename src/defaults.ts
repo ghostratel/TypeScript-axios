@@ -51,6 +51,7 @@ export const defaults: Defaults = {
         !headers['Content-Type'] && (headers['Content-Type'] = 'application/json;charset=utf-8')
         return JSON.stringify(data)
       }
+      return data
     }
   ],
 
