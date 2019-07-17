@@ -1,10 +1,9 @@
 import { RequestConfig, ResponsePromise, Response, TransformFunc } from '../types/index'
 import { processResponse } from '../helpers/response'
 import { RequestError } from '../helpers/error'
-import { URLSerialization } from '../helpers/url'
+import { URLSerialization, isCrossOrigin } from '../helpers/url'
 import { transformData } from '../helpers/data'
 import { processRequestHeaders } from '../helpers/headers'
-import { isCrossOrigin } from '../helpers/url'
 import { cookie } from '../helpers/cookie'
 
 function processConfig(config: RequestConfig): void {

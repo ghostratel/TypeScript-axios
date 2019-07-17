@@ -12,14 +12,14 @@ import request from '../../../src/index'
 request({
   url: 'http://localhost:9999/post',
   transformRequest: [
-    function(data, h) {
+    function (data, h) {
       console.log(1, h)
       return data
-    }
-  , function(data,h) {
-    console.log(2, h)
-    return data
-  }],
+    },
+    function (data, h) {
+      console.log(2, h)
+      return data
+    }],
   method: 'post',
   data: {
     foo: 'bar',
