@@ -32,7 +32,8 @@ export default function dispatchRequest(config: RequestConfig): ResponsePromise 
       xsrfCookieName,
       xsrfHeaderName,
       onDownloadProgress,
-      onUploadProgress
+      onUploadProgress,
+      auth
     } = config
     let xhr = new XMLHttpRequest()
 
@@ -50,6 +51,10 @@ export default function dispatchRequest(config: RequestConfig): ResponsePromise 
 
     if (isFormData(data)) {
       delete headers['Content-Type']
+    }
+
+    if (auth) {
+      headers['Authorization'] = 'Basic ' + btoa(auth.username + ':' + auth.password)
     }
 
     Object.keys(headers).forEach(k => {

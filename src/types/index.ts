@@ -38,6 +38,8 @@ export interface RequestConfig {
 
   onDownloadProgress?: (e: ProgressEvent) => void
   onUploadProgress?: (e: ProgressEvent) => void
+
+  auth?: RequestAuthorization
 }
 
 export interface Response {
@@ -136,6 +138,8 @@ export interface Defaults {
 
   onDownloadProgress?: (e: ProgressEvent) => void
   onUploadProgress?: (e: ProgressEvent) => void
+
+  auth?: RequestAuthorization
 }
 
 export interface CancelToken {
@@ -143,6 +147,11 @@ export interface CancelToken {
   reason?: Cancel
 
   throwIfRequested(): void
+}
+
+interface RequestAuthorization {
+  username: string
+  password: string
 }
 
 export interface Canceler {

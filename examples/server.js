@@ -3,6 +3,7 @@ const cors = require('cors')
 const cookie = require('cookie-parser')
 const multiparty = require('connect-multiparty')
 const path = require('path')
+const atob = require('atob')
 const app = express()
 
 app.use(cors({origin: 'http://127.0.0.1:8888',credentials: true}))
@@ -63,6 +64,17 @@ app.get('/xsrf', (req, res) => {
 
 app.post('/upload', (req, res) => {
   res.json({msg: 'hello'})
+})
+
+app.post('/auth', (req, res) => {
+  const value = req.headers['authorization'].split(' ')[1]
+  const [username, password] = atob(value).split(':')
+  if(username === 'ghost' && password === '123456') {
+    res.json(req.body)
+  } else {
+    res.status(401)
+    res.send('UnAuthorization')
+  }
 })
 
 app.listen(9999, () => {
