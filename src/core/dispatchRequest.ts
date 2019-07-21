@@ -33,7 +33,8 @@ export default function dispatchRequest(config: RequestConfig): ResponsePromise 
       xsrfHeaderName,
       onDownloadProgress,
       onUploadProgress,
-      auth
+      auth,
+      validateStatus
     } = config
     let xhr = new XMLHttpRequest()
 
@@ -91,7 +92,7 @@ export default function dispatchRequest(config: RequestConfig): ResponsePromise 
 
         // 请求完成，但不一定成功
         const response: Response = processResponse(_data, xhr, config)
-        if (xhr.status >= 200 && xhr.status < 300) {
+        if (!validateStatus || validateStatus(xhr.status)) {
           resolve(response)
         } else {
           reject(

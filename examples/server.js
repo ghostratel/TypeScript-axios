@@ -77,6 +77,11 @@ app.post('/auth', (req, res) => {
   }
 })
 
+app.get('/validateStatus', (req, res) => {
+  res.status(304)
+  res.json({msg: 'hello world !'})
+})
+
 app.listen(9999, () => {
   console.log('API server is running at port 9999.')
 })

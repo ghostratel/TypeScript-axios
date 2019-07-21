@@ -40,6 +40,8 @@ export interface RequestConfig {
   onUploadProgress?: (e: ProgressEvent) => void
 
   auth?: RequestAuthorization
+
+  validateStatus?: (status: number) => boolean
 }
 
 export interface Response {
@@ -139,7 +141,7 @@ export interface Defaults {
   onDownloadProgress?: (e: ProgressEvent) => void
   onUploadProgress?: (e: ProgressEvent) => void
 
-  auth?: RequestAuthorization
+  validateStatus?: (status: number) => boolean
 }
 
 export interface CancelToken {
