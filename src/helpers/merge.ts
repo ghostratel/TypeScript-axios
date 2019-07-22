@@ -1,10 +1,10 @@
-import { Defaults, RequestConfig } from '../types/index'
+import { RequestConfig } from '../types/index'
 import { isObject, deepCopy } from '../helpers/utils'
 
 const fieldsOverwriteByUserConf = ['data', 'params', 'method', 'url', 'auth']
 const fieldsNeedToBeDeepMerged = ['headers']
 
-export function mergeConf(defaultConf: Defaults, userConf: RequestConfig): RequestConfig {
+export function mergeConf(defaultConf: RequestConfig, userConf: RequestConfig): RequestConfig {
   const config = deepCopy(defaultConf)
 
   for (let key in userConf) {

@@ -1,11 +1,11 @@
-import { RequestMixin, Defaults, RequestConfig } from './types/index'
+import { RequestMixin, RequestConfig } from './types/index'
 import { mergeConf } from './helpers/merge'
 import Request from './core/request'
 import { defaults } from './defaults'
 import { CancelToken } from './cancel/CancelToken'
 import { Cancel, isCancel } from './cancel/Cancel'
 
-function createRequestMixin(config: Defaults): RequestMixin {
+function createRequestMixin(config: RequestConfig): RequestMixin {
   const requestInstance: Request = new Request(config)
   const mixin: any = requestInstance.request.bind(requestInstance)
 
@@ -18,11 +18,11 @@ function createRequestMixin(config: Defaults): RequestMixin {
 
 const request = createRequestMixin(defaults)
 
-request.create = function(config?: Defaults) {
+request.create = function(config?: RequestConfig) {
   if (!config) {
-    config = {} as Defaults
+    config = {} as RequestConfig
   }
-  return createRequestMixin(mergeConf(defaults, config as RequestConfig) as Defaults)
+  return createRequestMixin(mergeConf(defaults, config as RequestConfig) as RequestConfig)
 }
 
 request.CancelToken = CancelToken

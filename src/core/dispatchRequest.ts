@@ -9,7 +9,7 @@ import { isFormData } from '../helpers/utils'
 
 function processConfig(config: RequestConfig): void {
   const { url, params, data, headers, paramsSerializer } = config
-  config.url = URLSerialization(url, params, paramsSerializer)
+  config.url = URLSerialization(url!, params, paramsSerializer)
   config.headers = processRequestHeaders(headers, config.method!)
   config.data = transformData(data)
 }
@@ -38,12 +38,12 @@ export default function dispatchRequest(config: RequestConfig): ResponsePromise 
     } = config
     let xhr = new XMLHttpRequest()
 
-    xhr.open(method, url, true)
+    xhr.open(method, url!, true)
 
     xhr.responseType = responseType
     xhr.timeout = timeout
 
-    if (withCredentials || (isCrossOrigin(url) && xsrfCookieName)) {
+    if (withCredentials || (isCrossOrigin(url!) && xsrfCookieName)) {
       const cookieValue = cookie.read(xsrfCookieName!)
       if (cookieValue && xsrfHeaderName) {
         headers[xsrfHeaderName] = cookieValue

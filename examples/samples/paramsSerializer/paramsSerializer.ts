@@ -14,7 +14,7 @@ request.get('http://localhost:9999/get', {
 })
 
 const i = request.create({
-  paramsSerializer: params => {
+  paramsSerializer: (params:any) => {
     return qs.stringify(params, {arrayFormat: 'brackets'})
   }
 })

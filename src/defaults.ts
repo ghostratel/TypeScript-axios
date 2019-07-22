@@ -1,4 +1,4 @@
-import { Defaults } from './types/index'
+import { RequestConfig } from './types/index'
 import { isURLSearchParams, isObject } from './helpers/utils'
 
 /**
@@ -16,7 +16,9 @@ function tryToTransformResponseText(responseText: string): any {
   return responseText
 }
 
-export const defaults: Defaults = {
+export const defaults: RequestConfig = {
+  url: '',
+
   method: 'get',
 
   timeout: 0,

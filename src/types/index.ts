@@ -16,7 +16,7 @@ export type RequestMethod =
 
 export interface RequestConfig {
   [index: string]: any
-  url: string
+  url?: string
   method?: RequestMethod
   data?: any
   params?: any
@@ -67,29 +67,29 @@ export interface RequestErrorInterface extends Error {
 export interface RequestInterface {
   [index: string]: any
 
-  defaults: Defaults
+  defaults: RequestConfig
 
   interceptors: {
     request: InterceptorsControllerInterface<RequestConfig>
     response: InterceptorsControllerInterface<Response>
   }
 
-  request(url: string, config?: any): ResponsePromise
+  request(url: string, config?: RequestConfig): ResponsePromise
   request(config: RequestConfig): ResponsePromise
 
-  get(url: string, config?: any): ResponsePromise
+  get(url: string, config?: RequestConfig): ResponsePromise
 
-  delete(url: string, config?: any): ResponsePromise
+  delete(url: string, config?: RequestConfig): ResponsePromise
 
-  head(url: string, config?: any): ResponsePromise
+  head(url: string, config?: RequestConfig): ResponsePromise
 
-  options(url: string, config?: any): ResponsePromise
+  options(url: string, config?: RequestConfig): ResponsePromise
 
-  post(url: string, data?: any, config?: any): ResponsePromise
+  post(url: string, data?: any, config?: RequestConfig): ResponsePromise
 
-  put(url: string, data?: any, config?: any): ResponsePromise
+  put(url: string, data?: any, config?: RequestConfig): ResponsePromise
 
-  patch(url: string, data?: any, config?: any): ResponsePromise
+  patch(url: string, data?: any, config?: RequestConfig): ResponsePromise
 }
 
 export interface RequestMixin extends RequestInterface {
@@ -122,30 +122,6 @@ export interface InterceptorsControllerInterface<T> {
 export interface TransformFunc {
   (data: any, headers?: any): any
 }
-
-export interface Defaults {
-  [index: string]: any
-
-  timeout: number
-
-  method: string
-
-  headers: any
-
-  transformRequest: TransformFunc | TransformFunc[]
-
-  transformResponse: TransformFunc | TransformFunc[]
-
-  xsrfCookieName?: string
-
-  xsrfHeaderName?: string
-
-  onDownloadProgress?: (e: ProgressEvent) => void
-  onUploadProgress?: (e: ProgressEvent) => void
-
-  validateStatus?: (status: number) => boolean
-}
-
 export interface CancelToken {
   promise: Promise<Cancel>
   reason?: Cancel

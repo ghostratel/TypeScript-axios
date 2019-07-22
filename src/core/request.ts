@@ -3,8 +3,7 @@ import {
   RequestConfig,
   ResponsePromise,
   InterceptorResolvedFn,
-  InterceptorRejectedFn,
-  Defaults
+  InterceptorRejectedFn
 } from '../types/index'
 import dispatchRequest from './dispatchRequest'
 import { RequestInterceptorsController, ResponseInterceptorsController } from './interceptors'
@@ -23,7 +22,7 @@ interface PromiseChain<T> {
 export default class Request implements RequestInterface {
   [index: string]: any
 
-  defaults: Defaults
+  defaults: RequestConfig
 
   interceptors: Interceptors
 
@@ -94,7 +93,7 @@ export default class Request implements RequestInterface {
     return this.request(url, Object.assign(config, { data, method: 'PUT' }))
   }
 
-  constructor(cfg: Defaults) {
+  constructor(cfg: RequestConfig) {
     this.interceptors = {
       request: new RequestInterceptorsController(),
       response: new ResponseInterceptorsController()
