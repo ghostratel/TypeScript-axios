@@ -42,6 +42,8 @@ export interface RequestConfig {
   auth?: RequestAuthorization
 
   validateStatus?: (status: number) => boolean
+
+  paramsSerializer?: (params: any) => string
 }
 
 export interface Response {

@@ -8,8 +8,8 @@ import { cookie } from '../helpers/cookie'
 import { isFormData } from '../helpers/utils'
 
 function processConfig(config: RequestConfig): void {
-  const { url, params, data, headers } = config
-  config.url = URLSerialization(url, params)
+  const { url, params, data, headers, paramsSerializer } = config
+  config.url = URLSerialization(url, params, paramsSerializer)
   config.headers = processRequestHeaders(headers, config.method!)
   config.data = transformData(data)
 }

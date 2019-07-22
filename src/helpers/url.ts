@@ -1,4 +1,4 @@
-import { isArray, encode, isDate, isObject } from './utils'
+import { isArray, encode, isDate, isObject, isURLSearchParams } from './utils'
 
 /**
  * 处理URL
@@ -8,35 +8,46 @@ import { isArray, encode, isDate, isObject } from './utils'
  * @param {*} [params]
  * @returns {string}
  */
-export function URLSerialization(url: string, params?: any): string {
+export function URLSerialization(
+  url: string,
+  params?: any,
+  paramsSerializer?: (p: any) => string
+): string {
   if (!params) {
     return url
   }
-  const values = []
-  for (let key in params) {
-    if (params.hasOwnProperty(key)) {
-      let value = params[key]
-      if (value === null || value === undefined) {
-        continue
-      }
 
-      if (isArray(value)) {
-        key += '[]'
-        values.push(...value.map(v => `${encode(key)}=${encode(v)}`))
-        continue
-      }
+  let values = []
 
-      if (isObject(value)) {
-        values.push(`${key}=${encode(JSON.stringify(value))}`)
-        continue
-      }
+  if (paramsSerializer) {
+    values = paramsSerializer(params).split('&')
+  } else if (isURLSearchParams(params)) {
+    values = params.toString().split('&')
+  } else {
+    for (let key in params) {
+      if (params.hasOwnProperty(key)) {
+        let value = params[key]
+        if (value === null || value === undefined) {
+          continue
+        }
 
-      if (isDate(value)) {
-        values.push(`${key}=${value.toISOString()}`)
-        continue
-      }
+        if (isArray(value)) {
+          key += '[]'
+          values.push(...value.map(v => `${encode(key)}=${encode(v)}`))
+          continue
+        }
 
-      values.push(`${key}=${encode(value)}`)
+        if (isObject(value)) {
+          values.push(`${key}=${encode(JSON.stringify(value))}`)
+          continue
+        }
+
+        if (isDate(value)) {
+          values.push(`${key}=${value.toISOString()}`)
+          continue
+        }
+        values.push(`${key}=${encode(value)}`)
+      }
     }
   }
 
