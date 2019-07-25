@@ -1,14 +1,18 @@
-import { RequestConfig, ResponsePromise, Response, TransformFunc } from '../types/index'
+import { RequestConfig, ResponsePromise, Response } from '../types/index'
 import { processResponse } from '../helpers/response'
 import { RequestError } from '../helpers/error'
-import { URLSerialization, isCrossOrigin } from '../helpers/url'
+import { URLSerialization, isCrossOrigin, isAbsoluteURL, combineURLs } from '../helpers/url'
 import { transformData } from '../helpers/data'
 import { processRequestHeaders } from '../helpers/headers'
 import { cookie } from '../helpers/cookie'
 import { isFormData } from '../helpers/utils'
 
 function processConfig(config: RequestConfig): void {
-  const { url, params, data, headers, paramsSerializer } = config
+  const { params, data, headers, paramsSerializer, baseURL } = config
+  let { url } = config
+  if (baseURL && !isAbsoluteURL(url!)) {
+    url = combineURLs(baseURL, url)
+  }
   config.url = URLSerialization(url!, params, paramsSerializer)
   config.headers = processRequestHeaders(headers, config.method!)
   config.data = transformData(data)

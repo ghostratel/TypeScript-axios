@@ -44,6 +44,8 @@ export interface RequestConfig {
   validateStatus?: (status: number) => boolean
 
   paramsSerializer?: (params: any) => string
+
+  baseURL?: string
 }
 
 export interface Response {
