@@ -8,6 +8,7 @@ import {
 import dispatchRequest from './dispatchRequest'
 import { RequestInterceptorsController, ResponseInterceptorsController } from './interceptors'
 import { mergeConf } from '../helpers/merge'
+import { isAbsoluteURL, combineURLs, URLSerialization } from '../helpers/url'
 
 interface Interceptors {
   request: RequestInterceptorsController
@@ -91,6 +92,14 @@ export default class Request implements RequestInterface {
 
   put(url: string, data: any = {}, config: any = {}): ResponsePromise {
     return this.request(url, Object.assign(config, { data, method: 'PUT' }))
+  }
+
+  getURI(config: RequestConfig): string {
+    config = mergeConf(this.defaults, config)
+    if (config.baseURL && !isAbsoluteURL(config.url!)) {
+      config.url = combineURLs(config.baseURL, config.url)
+    }
+    return URLSerialization(config.url!, config.params, config.paramsSerializer)
   }
 
   constructor(cfg: RequestConfig) {

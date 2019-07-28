@@ -92,6 +92,8 @@ export interface RequestInterface {
   put(url: string, data?: any, config?: RequestConfig): ResponsePromise
 
   patch(url: string, data?: any, config?: RequestConfig): ResponsePromise
+
+  getURI(config: RequestConfig): string
 }
 
 export interface RequestMixin extends RequestInterface {
@@ -101,6 +103,10 @@ export interface RequestMixin extends RequestInterface {
   CancelToken: CancelTokenStatic
   Cancel: CancelStatic
   isCancel: (value: any) => boolean
+
+  all<T>(promises: Array<T | Promise<T>>): Promise<T[]>
+
+  spread<T, R>(callback: (...args: T[]) => R): (arr: Array<T>) => R
 }
 
 export interface InterceptorResolvedFn<T> {

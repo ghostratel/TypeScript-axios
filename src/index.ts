@@ -28,5 +28,13 @@ request.create = function(config?: RequestConfig) {
 request.CancelToken = CancelToken
 request.Cancel = Cancel
 request.isCancel = isCancel
+request.all = function(promises) {
+  return Promise.all(promises)
+}
+request.spread = function(callback) {
+  return function(arr) {
+    return callback.apply(null, arr)
+  }
+}
 
 export default request
