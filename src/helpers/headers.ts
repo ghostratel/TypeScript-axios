@@ -1,6 +1,6 @@
 import { RequestMethod } from '../types/index'
 
-function normalizeHeadersName(headers: any, name: string): void {
+export function normalizeHeadersName(headers: any, name: string): void {
   Object.keys(headers).forEach(k => {
     if (k.toUpperCase() === name.toUpperCase() && k !== name) {
       headers[name] = headers[k]
@@ -37,8 +37,8 @@ export function processResponseHeaders(headersString: string): any {
     if (!line) {
       return
     }
-    let [key, value] = line.split(':').map(s => s.trim())
-    ret[key] = value
+    let [key, ...values] = line.split(':')
+    ret[key] = values.join(':').trim()
   })
   return ret
 }
