@@ -54,7 +54,8 @@ describe('helper: headers', () => {
       'Date: Sat, 03 Aug 2019 14:23:49 GMT\r\n' +
       'Pragma: no-cache\r\n' +
       'Server: apache\r\n' +
-      ': foobarbazboo\r\n' +
+      ': bazboo\r\n' +
+      'foo: \r\n' +
       'Strict-Transport-Security: max-age=172800\r\n' +
       'X-Content-Type-Options: nosniff'
 
@@ -65,6 +66,7 @@ describe('helper: headers', () => {
     expect(processedHeaders['Date']).toBe('Sat, 03 Aug 2019 14:23:49 GMT')
     expect(processedHeaders['Pragma']).toBe('no-cache')
     expect(processedHeaders['Server']).toBe('apache')
+    expect(processedHeaders['foo']).toBe('')
     expect(processedHeaders['Strict-Transport-Security']).toBe('max-age=172800')
     expect(processedHeaders['X-Content-Type-Options']).toBe('nosniff')
   })
