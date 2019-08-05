@@ -69,7 +69,7 @@ export function isCrossOrigin(requestURL: string): boolean {
   return r.host === h.host && r.protocol === h.protocol
 }
 
-function resolveURL(URL: string): ResolvedURL {
+export function resolveURL(URL: string): ResolvedURL {
   const utilNode = document.createElement('a')
   utilNode.setAttribute('href', URL)
   const { protocol, host } = utilNode
